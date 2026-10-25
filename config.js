@@ -32,7 +32,12 @@ GAME.COLORS = {
   itemBomb: '#4f4',
   itemLife: '#ff4',
 };
-GAME.MAX_BULLETS = 4000;
-GAME.MAX_PARTICLES = 1200;
+GAME.MAX_BULLETS = 1800;
+GAME.MAX_PARTICLES = 600;
+GAME.MAX_ITEMS = 300;
 GAME.STAGE_COUNT = 2;
 GAME.GAME_SPEED = 0.85;
+
+// 2 = alto, 1 = medio, 0 = baixo. Pode ser fixado via ?quality=low|medium|high
+GAME.QUALITY = 2;
+GAME.AUTO_QUALITY = true;

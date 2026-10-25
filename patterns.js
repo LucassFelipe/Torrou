@@ -62,18 +62,23 @@ P.laser = function(src, game, angle, length, color){
 // curved bullets: store angular velocity in bullet? We'll add 'angVel' property
 P.curvedRing = function(src, game, n, speed, angVel, color, offset=0){
   for(let i=0;i<n;i++){
+    if(game.bullets.length>=GAME.MAX_BULLETS) return;
     const a = offset + (Math.PI*2*i)/n;
     const b = new E.Bullet(src.x,src.y, Math.cos(a)*speed, Math.sin(a)*speed, color,4,'small','enemy');
     b.angVel=angVel;
-    if(game.bullets.length<GAME.MAX_BULLETS) game.bullets.push(b);
+    b.ang=a;
+    b.sp=speed;
+    game.bullets.push(b);
   }
 };
 
 // update curved bullets globally handled in game loop
 P.updateCurved = function(b,dt){
   if(b.angVel){
-    const sp=Math.hypot(b.vx,b.vy); if(sp>0){
-      let a=Math.atan2(b.vy,b.vx); a+=b.angVel*dt;
+    const sp = b.sp !== undefined ? b.sp : Math.sqrt(b.vx*b.vx+b.vy*b.vy);
+    if(sp>0){
+      let a = (b.ang !== undefined ? b.ang : Math.atan2(b.vy,b.vx)) + b.angVel*dt;
+      b.ang=a;
       b.vx=Math.cos(a)*sp; b.vy=Math.sin(a)*sp;
     }
   }

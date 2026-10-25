@@ -28,5 +28,15 @@ Abra o arquivo `index.html` no navegador. Se o navegador bloquear o carregamento
 - `stage.js` - fases, midboss e bosses
 - `game.js` - loop, estados, colisões, renderização
 
+## Desempenho
+O jogo reduz a qualidade sozinho quando o frame demora demais (primeiro remove efeitos, depois desce a resolução interna para 480×360). Para forçar um modo:
+
+- `index.html?quality=high` — tudo ligado
+- `index.html?quality=medium` — metade das partículas, sem brilho/blur
+- `index.html?quality=low` — 480×360, balas como quadrados, menos partículas
+- `index.html?debug=1` — mostra FPS, qualidade ativa e contagem de balas/partículas
+
+Também foram aplicados: fundo e sprites pré-renderizados, partículas limitadas e agrupadas, colisões sem `Math.hypot`, teto de balas/itens, throttle de SFX e o canvas promovido para camada própria (evita repintar o fundo da página a cada frame).
+
 ## Aviso
 Projeto não oficial, sem afiliação com Team Shanghai Alice. Touhou Project © ZUN / Team Shanghai Alice.

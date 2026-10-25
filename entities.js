@@ -35,8 +35,8 @@ E.Item.prototype.update = function(dt, player){
   this.age+=dt;
   // homing toward player if focus? EoSD: items fall, then if player high, auto-collect. Simple: fall, slight homing if near
   if(player){
-    const d=U.dist(this.x,this.y,player.x,player.y);
-    if(d<90){ const a=U.angle(this.x,this.y,player.x,player.y); this.vx+=Math.cos(a)*0.15; this.vy+=Math.sin(a)*0.15; }
+    const dx=player.x-this.x, dy=player.y-this.y;
+    if(dx*dx+dy*dy<8100){ const a=U.angle(this.x,this.y,player.x,player.y); this.vx+=Math.cos(a)*0.15; this.vy+=Math.sin(a)*0.15; }
   }
   this.vx=U.clamp(this.vx,-2,2); this.vy=U.clamp(this.vy,0.5,3);
   this.x+=this.vx*dt; this.y+=this.vy*dt;
@@ -120,6 +120,7 @@ E.Player.prototype.fire = function(game){
     if(p>=4){ shots.push({a:baseAngle-0.4, sp:15}); shots.push({a:baseAngle+0.4, sp:15}); }
   }
   for(const s of shots){
+    if(game.bullets.length >= GAME.MAX_BULLETS) break;
     const b=new E.Bullet(this.x+Math.cos(s.a)*10, this.y+Math.sin(s.a)*10, Math.cos(s.a)*s.sp, Math.sin(s.a)*s.sp, '#fff', 3, 'needle', 'player');
     game.bullets.push(b);
   }
